@@ -1,5 +1,6 @@
 {
   "name": "my-docs-frontend",
+  "homepage": "https://zawolanski.github.io/mydocs/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
