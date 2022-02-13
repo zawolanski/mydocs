@@ -1,5 +1,7 @@
-import Button from '@components/Button';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+import Button from '@components/Button';
 
 const App = (): JSX.Element => {
   const [t] = useTranslation('content');
@@ -19,6 +21,9 @@ const App = (): JSX.Element => {
           {t('learn')}
         </a>
         <Button />
+        <Link to="/signin">Sign in</Link>
+        <br />
+        <Link to="/signup">Sign up</Link>
       </header>
     </div>
   );
