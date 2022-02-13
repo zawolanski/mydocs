@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import Root from '@pages/Root';
 import '@/index.css';
-import '@/localization/i18n';
+import '@/i18n';
 
 ReactDOM.render(
   <Suspense fallback="loading">

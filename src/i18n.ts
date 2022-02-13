@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     backend: {
-      loadPath: `${process.env.PUBLIC_URL}/src/locales/{{lng}}/{{ns}}.json`,
+      loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
       allowMultiLoading: true,
     },
     fallbackLng: 'en-us',
