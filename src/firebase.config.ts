@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 import { ENV } from './config/env';
 
 const firebaseConfig = {
@@ -12,3 +13,4 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
+export const db = getFirestore();
