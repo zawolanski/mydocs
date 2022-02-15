@@ -32,7 +32,7 @@ module.exports = {
         endOfLine: 'auto',
         semi: true,
         singleQuote: true,
-        printWidth: 80,
+        printWidth: 120,
         tabWidth: 2,
       },
     ],
@@ -51,6 +51,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
