@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { ENV } from './config/env';
