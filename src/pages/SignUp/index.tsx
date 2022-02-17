@@ -1,3 +1,78 @@
-const SignUp = () => <div>Sign up</div>;
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { db } from '@/firebase.config';
+
+const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
+  const onSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (!email || !password) return;
+
+    setLoading(true);
+
+    try {
+      const auth = getAuth();
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+
+      const { user } = userCredentials;
+
+      const docRef = await addDoc(collection(db, 'users'), {
+        firstname,
+        lastname,
+        userId: user.uid,
+      });
+
+      console.log(user, docRef.id);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        <div>
+          <label htmlFor="email">
+            Email
+            <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="firstname">
+            Firstname
+            <input id="firstname" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="lastname">
+            Lastname
+            <input id="lastname" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="password">
+            Password
+            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </label>
+        </div>
+        <button type="submit" disabled={isLoading}>
+          Sign up
+        </button>
+        <br />
+        <Link to="/signup">Sign in</Link>
+      </form>
+    </div>
+  );
+};
 
 export default SignUp;
