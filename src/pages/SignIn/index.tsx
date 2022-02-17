@@ -5,10 +5,12 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!email || !password) return;
+    setIsLoading(true);
 
     try {
       const auth = getAuth();
@@ -20,6 +22,8 @@ const SignIn = () => {
     } catch (error) {
       console.error(error);
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -37,7 +41,9 @@ const SignIn = () => {
             <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </label>
         </div>
-        <button type="submit">Sign in</button>
+        <button type="submit" disabled={isLoading}>
+          Sign in
+        </button>
         <br />
         <Link to="/signup">Sign up</Link>
       </form>

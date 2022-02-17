@@ -1,5 +1,5 @@
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -24,13 +24,9 @@ const SignUp = () => {
 
       const { user } = userCredentials;
 
-      const docRef = await addDoc(collection(db, 'users'), {
-        firstname,
-        lastname,
-        userId: user.uid,
-      });
+      await updateProfile(user, { displayName: `${firstname} ${lastname}` });
 
-      console.log(user, docRef.id);
+      console.log(user);
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +65,7 @@ const SignUp = () => {
           Sign up
         </button>
         <br />
-        <Link to="/signup">Sign in</Link>
+        <Link to="/signin">Sign in</Link>
       </form>
     </div>
   );
