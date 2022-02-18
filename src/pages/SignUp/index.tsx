@@ -1,9 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { db } from '@/firebase.config';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +8,7 @@ const SignUp = () => {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -26,7 +24,9 @@ const SignUp = () => {
 
       await updateProfile(user, { displayName: `${firstname} ${lastname}` });
 
+      navigate('/documents');
       console.log(user);
+      return;
     } catch (error) {
       console.error(error);
     }

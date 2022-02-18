@@ -21,6 +21,7 @@ const SignIn = () => {
 
       navigate('/documents');
       console.log(user);
+      return;
     } catch (error) {
       console.error(error);
     }
@@ -46,6 +47,8 @@ const SignIn = () => {
         <button type="submit" disabled={isLoading}>
           Sign in
         </button>
+        <br />
+        <Link to="/forgot-password">Forgot password?</Link>
         <br />
         <Link to="/signup">Sign up</Link>
       </form>
