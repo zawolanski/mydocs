@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const SignIn = () => {
 
       const { user } = userCredentials;
 
+      navigate('/documents');
       console.log(user);
     } catch (error) {
       console.error(error);
