@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { ReactComponent as Logo } from '@/assets/logo/google.svg';
+import { useSnackbar } from 'notistack';
 
 interface GoogleAuthProps {
   handlePopupOpen: (val: boolean) => void;
@@ -12,6 +13,7 @@ interface GoogleAuthProps {
 const GoogleAuth = ({ handlePopupOpen }: GoogleAuthProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onGoogleClick = async () => {
     handlePopupOpen(true);
@@ -19,9 +21,10 @@ const GoogleAuth = ({ handlePopupOpen }: GoogleAuthProps) => {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
+      enqueueSnackbar('You were succesfully logged in');
       navigate('/documents');
     } catch (e) {
-      console.error(e);
+      enqueueSnackbar('An error occured while logging in', { variant: 'error' });
     }
     handlePopupOpen(false);
   };

@@ -12,6 +12,7 @@ import {
   Typography,
   Link as MuiLink,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import GoogleAuth from '@components/GoogleAuth';
 
@@ -22,6 +23,7 @@ const SignIn = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handlePopupOpen = (val: boolean) => setIsPopupOpen(val);
 
@@ -36,15 +38,12 @@ const SignIn = () => {
 
     try {
       const auth = getAuth();
-      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
 
-      const { user } = userCredentials;
-
+      enqueueSnackbar('You were succesfully logged in');
       navigate('/documents');
-      console.log(user);
-      return;
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar('An error occured while logging in', { variant: 'error' });
     }
 
     setIsLoading(false);
@@ -124,7 +123,7 @@ const SignIn = () => {
             to="/signup"
             sx={{ mt: 1.75, color: 'text.primary' }}
           >
-            Create account?
+            Create account
           </MuiLink>
         </Box>
       </Box>
