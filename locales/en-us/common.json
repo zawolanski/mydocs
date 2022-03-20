@@ -1,0 +1,13 @@
+{
+  "controls": {
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Password",
+      "show": "Show password",
+      "forgot": "Forgot password?"
+    },
+    "google": "Sign {{type}} with Google"
+  }
+}
