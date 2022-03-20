@@ -6,11 +6,10 @@ import SignUp from '@pages/SignUp';
 import Documents from '@pages/Documents';
 import ForgotPassword from '@pages/ForgotPassword';
 import AuthRoute from '@components/Routes/authRoute';
-import { theme } from '@/theme/mui';
-import { ThemeProvider } from '@mui/material/styles';
+import MainTemplate from '@/templates/main';
 
 const Root = () => (
-  <ThemeProvider theme={theme}>
+  <MainTemplate>
     <Router basename="mydocs">
       <Routes>
         <Route index element={<App />} />
@@ -22,7 +21,7 @@ const Root = () => (
         </Route>
       </Routes>
     </Router>
-  </ThemeProvider>
+  </MainTemplate>
 );
 
 export default Root;
