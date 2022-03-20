@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import {
@@ -12,14 +12,22 @@ import {
   Typography,
   Link as MuiLink,
 } from '@mui/material';
-import { ReactComponent as Logo } from '@/assets/logo/google.svg';
+
+import GoogleAuth from '@components/GoogleAuth';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const handlePopupOpen = (val: boolean) => setIsPopupOpen(val);
+
+  useEffect(() => {
+    setIsLoading(isPopupOpen);
+  }, [isPopupOpen]);
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -44,7 +52,7 @@ const SignIn = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Box sx={{ maxWidth: { xs: '100%', sm: '450px' }, width: '100%' }}>
+      <Box sx={{ maxWidth: { xs: '100%', sm: '450px' }, width: '100%', p: 2 }}>
         <Box
           sx={{
             boxSizing: 'border-box',
@@ -97,12 +105,7 @@ const SignIn = () => {
               </Box>
             </Box>
             <Divider sx={{ mb: 2 }}>or</Divider>
-            <Button variant="outlined" size="large" sx={{ width: '90%', mb: 4, p: '14px 14px' }}>
-              <Box sx={{ height: 25, width: 25, mr: 1 }}>
-                <Logo />
-              </Box>
-              Sign in with Google
-            </Button>
+            <GoogleAuth handlePopupOpen={handlePopupOpen} />
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
               <Button component={Link} to="/forgot-password" sx={{ mt: 0.75, pl: 0, pr: 0 }}>
                 Forgot password?
