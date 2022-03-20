@@ -6,7 +6,7 @@ import SignUp from '@pages/SignUp';
 import Documents from '@pages/Documents';
 import ForgotPassword from '@pages/ForgotPassword';
 import AuthRoute from '@components/Routes/authRoute';
-import MainTemplate from '@/templates/main';
+import MainTemplate from '@/templates/Main';
 
 const Root = () => (
   <MainTemplate>
