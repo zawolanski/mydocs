@@ -40,6 +40,7 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'react/require-default-props': 'off',
     'import/prefer-default-export': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',

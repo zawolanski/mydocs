@@ -4,9 +4,9 @@ import { ReactNode } from 'react';
 interface FormTemplateProps {
   children: ReactNode;
   isLoading: boolean;
-  additionalContent: ReactNode;
+  additionalContent?: ReactNode;
 }
-const FormTemplate = ({ children, isLoading, additionalContent }: FormTemplateProps) => (
+const FormTemplate = ({ children, isLoading, additionalContent = null }: FormTemplateProps) => (
   <Box
     sx={{
       minHeight: { xs: 'auto', sm: '100vh' },
