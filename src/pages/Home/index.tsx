@@ -1,15 +1,18 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const App = (): JSX.Element => {
   const [t] = useTranslation('content');
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    navigation('/signin');
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           {t('learn')}
         </a>
