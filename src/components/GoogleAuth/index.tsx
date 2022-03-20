@@ -1,10 +1,11 @@
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
+import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { ReactComponent as Logo } from '@/assets/logo/google.svg';
-import { useSnackbar } from 'notistack';
 
 interface GoogleAuthProps {
   handlePopupOpen: (val: boolean) => void;
@@ -14,6 +15,7 @@ const GoogleAuth = ({ handlePopupOpen }: GoogleAuthProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
+  const [t] = useTranslation(['signin', 'common']);
 
   const onGoogleClick = async () => {
     handlePopupOpen(true);
@@ -21,10 +23,10 @@ const GoogleAuth = ({ handlePopupOpen }: GoogleAuthProps) => {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      enqueueSnackbar('You were succesfully logged in');
+      enqueueSnackbar(t('notification.success'));
       navigate('/documents');
     } catch (e) {
-      enqueueSnackbar('An error occured while logging in', { variant: 'error' });
+      enqueueSnackbar(t('notification.error'), { variant: 'error' });
     }
     handlePopupOpen(false);
   };
@@ -34,7 +36,7 @@ const GoogleAuth = ({ handlePopupOpen }: GoogleAuthProps) => {
       <Box sx={{ height: 25, width: 25, mr: 1 }}>
         <Logo />
       </Box>
-      Sign {location.pathname.includes('signin') ? 'in' : 'up'} with Google
+      {t('controls.google', { ns: 'common', type: location.pathname.includes('signin') ? 'in' : 'up' })}
     </Button>
   );
 };

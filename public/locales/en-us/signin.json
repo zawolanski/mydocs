@@ -1,0 +1,12 @@
+{
+  "title": "Sign in",
+  "subtitle": "Use your email and password",
+  "or": "or",
+  "signInButton": "Sign in",
+  "signUpButton": "Create account",
+  "notification": {
+    "success": "You were succesfully logged in",
+    "invalidCredentials": "Invalid email or password",
+    "error": "An error occured while logging in"
+  }
+}
