@@ -9,5 +9,8 @@
       "forgot": "Forgot password?"
     },
     "google": "Sign {{type}} with Google"
+  },
+  "notification": {
+    "notFound": "{{field}} not found"
   }
 }

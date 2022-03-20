@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-import FormTemplate from '@/templates/Form';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from 'notistack';
+
+import FormTemplate from '@/templates/Form';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [t] = useTranslation('forgot');
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const [t] = useTranslation(['forgotPassword', 'common']);
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     setIsLoading(true);
@@ -16,10 +20,17 @@ const ForgotPassword = () => {
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
-      console.log('Email was sent!');
-      return;
-    } catch (error) {
-      console.error(error);
+      setTimeout(() => navigate('/signin'), 1000);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const msg = error?.message;
+      if (msg.includes('auth/user-not-found')) {
+        enqueueSnackbar(t('notification.notFound', { ns: 'common', field: 'Email' }), {
+          variant: 'error',
+        });
+      } else {
+        enqueueSnackbar(t('notification.error'), { variant: 'error' });
+      }
     }
     setIsLoading(false);
   };
@@ -37,10 +48,10 @@ const ForgotPassword = () => {
         }}
       >
         <Typography variant="h6" sx={{ mb: 1.25 }}>
-          Account recovery
+          {t('title')}
         </Typography>
         <Typography variant="body2" sx={{ mb: 2.25 }}>
-          Enter email address related to your account
+          {t('subtitle')}
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: '90%', mb: 3 }}>
           <TextField
@@ -51,14 +62,14 @@ const ForgotPassword = () => {
           />
         </Box>
         <Typography variant="body1" width="90%" marginBottom={3}>
-          We will send you a verification link if we find an email in the database.
+          {t('text')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '90%' }}>
           <Button component={Link} to="/signin" sx={{ mt: 0.75, pl: 0, pr: 0 }}>
-            Log in instead
+            {t('logInInsteadButton')}
           </Button>
           <Button type="submit" variant="contained" disabled={isLoading}>
-            Send link
+            {t('signUpButton')}
           </Button>
         </Box>
       </Box>
