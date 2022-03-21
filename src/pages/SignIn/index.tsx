@@ -47,7 +47,7 @@ const SignIn = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const msg = error?.message;
-      if (msg.includes('auth/wrong-password') || msg.includes('auth/user-not-found')) {
+      if (msg?.includes('auth/wrong-password') || msg?.includes('auth/user-not-found')) {
         enqueueSnackbar(t('notification.invalidCredentials'), { variant: 'error' });
       } else {
         enqueueSnackbar(t('notification.error'), { variant: 'error' });
@@ -81,6 +81,7 @@ const SignIn = () => {
           alignItems: 'center',
           opacity: isLoading ? 0.5 : 1,
         }}
+        autoComplete="off"
       >
         <Typography variant="h6" sx={{ mb: 1.25 }}>
           {t('title')}

@@ -20,6 +20,7 @@ const ForgotPassword = () => {
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
+      enqueueSnackbar(t('notification.success'));
       setTimeout(() => navigate('/signin'), 1000);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

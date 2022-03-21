@@ -1,0 +1,12 @@
+{
+  "title": "Create account",
+  "subtitle": "Enter required data to proceed",
+  "or": "or",
+  "signInButton": "Log in instead?",
+  "signUpButton": "Create",
+  "notification": {
+    "success": "You were succesfully created account",
+    "invalidCredentials": "Invalid credentials",
+    "error": "An error occured while creating account"
+  }
+}

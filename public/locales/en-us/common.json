@@ -8,9 +8,17 @@
       "show": "Show password",
       "forgot": "Forgot password?"
     },
-    "google": "Sign {{type}} with Google"
+    "firstname": {
+      "label": "Firstname"
+    },
+    "lastname": {
+      "label": "Lastname"
+    },
+    "googleSignin": "Sign in with Google",
+    "googleSignup": "Sign up with Google"
   },
   "notification": {
-    "notFound": "{{field}} not found"
+    "notFound": "{{field}} not found",
+    "emailExist": "Email already exist"
   }
 }

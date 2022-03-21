@@ -25,18 +25,22 @@ const GoogleAuth = ({ handlePopupOpen }: GoogleAuthProps) => {
       await signInWithPopup(auth, provider);
       enqueueSnackbar(t('notification.success'));
       navigate('/documents');
-    } catch (e) {
-      enqueueSnackbar(t('notification.error'), { variant: 'error' });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const msg = error?.message;
+      if (!msg?.includes('auth/popup-closed-by-user')) enqueueSnackbar(t('notification.error'), { variant: 'error' });
     }
     handlePopupOpen(false);
   };
+
+  const labelType = location.pathname.includes('signin') ? 'in' : 'up';
 
   return (
     <Button variant="outlined" size="large" sx={{ width: '90%', mb: 4, p: '14px 14px' }} onClick={onGoogleClick}>
       <Box sx={{ height: 25, width: 25, mr: 1 }}>
         <Logo />
       </Box>
-      {t('controls.google', { ns: 'common', type: location.pathname.includes('signin') ? 'in' : 'up' })}
+      {t(`controls.googleSign${labelType}`, { ns: 'common' })}
     </Button>
   );
 };
