@@ -8,7 +8,7 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     navigation('/signin');
-  }, []);
+  }, [navigation]);
 
   return (
     <div className="App">

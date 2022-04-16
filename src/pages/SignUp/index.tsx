@@ -1,17 +1,9 @@
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  Link as MuiLink,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from 'notistack';
 
 import FormTemplate from '@/templates/Form';
 import GoogleAuth from '@/components/GoogleAuth';
@@ -25,6 +17,7 @@ const SignUp = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [t] = useTranslation(['signup', 'common']);
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
   const handlePopupOpen = (val: boolean) => setIsPopupOpen(val);
@@ -48,10 +41,9 @@ const SignUp = () => {
       await updateProfile(user, { displayName: `${firstname} ${lastname}` });
 
       navigate('/documents');
-      console.log(user);
       return;
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(t('notification.error'), { variant: 'error' });
     }
 
     setIsLoading(false);
