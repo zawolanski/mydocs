@@ -1,0 +1,9 @@
+{
+  "title": "",
+  "subtitle": "",
+  "signOutButton": "Sign out",
+  "notification": {
+    "success": "",
+    "error": "An error occured while logging out"
+  }
+}
