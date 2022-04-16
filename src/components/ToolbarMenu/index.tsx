@@ -1,6 +1,7 @@
 import { getInitials } from '@/helpers/getInitials';
 import { Avatar, Box, Divider, Menu, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
+import { forwardRef } from 'react';
 
 import SignOut from '../SignOut';
 
@@ -9,7 +10,7 @@ interface Props {
   anchorEl: HTMLElement | null;
   handleClose: () => void;
 }
-const ToolbarMenu = ({ handleClose, ...props }: Props) => {
+const ToolbarMenu = forwardRef(({ handleClose, ...props }: Props) => {
   const user = getAuth().currentUser;
   if (!user) return null;
 
@@ -19,6 +20,9 @@ const ToolbarMenu = ({ handleClose, ...props }: Props) => {
       onClose={handleClose}
       MenuListProps={{ style: { padding: 0 } }}
       PaperProps={{ sx: { border: ({ palette }) => `1px solid ${palette.divider}` } }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+      keepMounted
     >
       <Box width="17.5rem">
         <Box p={1.5} display="flex" alignItems="center" flexDirection="column">
@@ -39,6 +43,6 @@ const ToolbarMenu = ({ handleClose, ...props }: Props) => {
       </Box>
     </Menu>
   );
-};
+});
 
 export default ToolbarMenu;
