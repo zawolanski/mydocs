@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { collection, onSnapshot, query, Unsubscribe, where } from 'firebase/firestore';
@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack';
 import { db } from '@/firebase.config';
 import { Document } from '@/types/models/document';
 import AppBar from '@components/AppBar/';
+import DocumentBar from '@components/DocumentBar';
 
 const Documents = () => {
   const [documents, setDocuments] = useState<Document[] | null>(null);
@@ -39,16 +40,16 @@ const Documents = () => {
     <>
       <div>
         <AppBar />
-        <Box sx={{ pt: 10 }}>
-          <Typography>Documents</Typography>
+        <Box
+          sx={{ pt: 10, m: '0 auto', userSelect: 'none' }}
+          width="100%"
+          maxWidth="1000px"
+          role="listbox"
+          component="div"
+          tabIndex={0}
+        >
           {documents && documents.length > 0 ? (
-            documents.map((doc) => (
-              <div>
-                <p>{doc.id}</p>
-                <p>{doc.name}</p>
-                <p>{doc.access}</p>
-              </div>
-            ))
+            documents.map((doc) => <DocumentBar key={doc.id} document={doc} isSingle={documents.length === 1} />)
           ) : (
             <p>There are no documents</p>
           )}

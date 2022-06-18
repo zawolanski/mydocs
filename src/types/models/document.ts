@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 /** The model representing the document */
 export interface Document {
   /** Actual id of a particular document */
@@ -16,4 +18,12 @@ export interface Document {
   owner: string;
   /** The type of permissions */
   permissions: 'editor' | 'viewer';
+  /** Creation date */
+  createdAt: Timestamp;
+  /** Date of the last update */
+  updatedAt: Timestamp;
+  /** Array with users who ever connected to the document */
+  usersHistory: string[];
+  /** Date of the latest file opening by owner */
+  lastOpenedByOwner: Timestamp;
 }
