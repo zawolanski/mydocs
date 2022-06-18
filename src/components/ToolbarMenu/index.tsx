@@ -1,5 +1,5 @@
 import { getInitials } from '@/helpers/getInitials';
-import { Avatar, Box, Divider, Menu, Typography } from '@mui/material';
+import { Avatar, Box, Divider, Menu, Theme, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
 import { forwardRef } from 'react';
 
@@ -19,7 +19,7 @@ const ToolbarMenu = forwardRef(({ handleClose, ...props }: Props) => {
       {...props}
       onClose={handleClose}
       MenuListProps={{ style: { padding: 0 } }}
-      PaperProps={{ sx: { border: ({ palette }) => `1px solid ${palette.divider}` } }}
+      PaperProps={{ sx: { border: ({ palette }: Theme) => `1px solid ${palette.divider}` } }}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       keepMounted
