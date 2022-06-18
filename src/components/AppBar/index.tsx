@@ -2,6 +2,7 @@ import { Description } from '@mui/icons-material';
 import { Toolbar, AppBar as MUIAppBar, Stack, Typography, Box, IconButton, Avatar } from '@mui/material';
 import { getAuth, User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 import ToolbarMenu from '@components/ToolbarMenu/';
 import { getInitials } from '@/helpers/getInitials';
@@ -10,12 +11,18 @@ const AppBar = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [initials, setInitials] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [scrollY, setScrollY] = useState<number>(window.scrollY);
   const open = Boolean(anchorEl);
+  const debouncedScrollY = useDebouncedCallback(() => setScrollY(window.scrollY), 500, {
+    leading: true,
+  });
 
   useEffect(() => {
     const auth = getAuth();
     if (auth.currentUser?.displayName) setInitials(getInitials(auth.currentUser?.displayName));
     setCurrentUser(auth.currentUser);
+    window.addEventListener('scroll', debouncedScrollY);
+    return () => window.removeEventListener('scroll', debouncedScrollY);
   }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,7 +38,7 @@ const AppBar = () => {
       <MUIAppBar
         position="fixed"
         sx={{
-          boxShadow: 0,
+          boxShadow: ({ shadows }) => (scrollY === 0 ? 0 : shadows[4]),
           background: (theme) => theme.palette.common.white,
           color: (theme) => theme.palette.text.secondary,
         }}

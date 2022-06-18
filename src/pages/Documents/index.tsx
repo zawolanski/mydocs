@@ -48,8 +48,44 @@ const Documents = () => {
           component="div"
           tabIndex={0}
         >
-          {documents && documents.length > 0 ? (
+          {/* {documents && documents.length > 0 ? (
             documents.map((doc) => <DocumentBar key={doc.id} document={doc} isSingle={documents.length === 1} />)
+          ) : (
+            <p>There are no documents</p>
+          )} */}
+          {documents && documents.length > 0 ? (
+            <>
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
+            </>
           ) : (
             <p>There are no documents</p>
           )}
