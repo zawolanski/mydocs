@@ -48,7 +48,7 @@ const DocumentBar = ({ document, isSingle }: Props) => (
         </Box>
         <Box width="15%">
           <Typography noWrap variant="body2" sx={{ color: (theme) => theme.palette.text.secondary }}>
-            {document.owner}
+            {document.ownerName}
           </Typography>
         </Box>
         <Box width="15%">

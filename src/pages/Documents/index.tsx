@@ -1,14 +1,17 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
-import { collection, onSnapshot, query, Unsubscribe, where } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
+import _ from 'lodash';
 
 import { db } from '@/firebase.config';
 import { Document } from '@/types/models/document';
 import AppBar from '@components/AppBar/';
 import DocumentBar from '@components/DocumentBar';
+import { User } from '@/types/models/user';
+import { getInvitedDocQuery, getOwnerDocQuery } from '@/firebase/queries';
 
 const Documents = () => {
   const [documents, setDocuments] = useState<Document[] | null>(null);
@@ -16,16 +19,35 @@ const Documents = () => {
   const [t] = useTranslation(['signin', 'common']);
 
   useEffect(() => {
-    let unsub: Unsubscribe;
+    let unsubOwner: Unsubscribe;
+    let unsubNotOwner: Unsubscribe;
     const auth = getAuth();
     const uid = auth.currentUser?.uid;
 
     if (uid) {
       try {
-        const q = query(collection(db, 'documents'), where('owner', '==', uid));
-        unsub = onSnapshot(q, (querySnapshot) => {
-          const docs: Document[] = [];
-          querySnapshot.forEach((document) => docs.push({ ...document.data(), id: document.id } as Document));
+        let docs: Document[] = [];
+        unsubOwner = onSnapshot(getOwnerDocQuery(uid), async (querySnapshot) => {
+          querySnapshot.forEach(async (document) =>
+            docs.push({ ...document.data(), id: document.id, ownerName: 'me' } as Document)
+          );
+          setDocuments(docs);
+        });
+
+        unsubNotOwner = onSnapshot(getInvitedDocQuery(uid), async (querySnapshot) => {
+          querySnapshot.forEach(async (document) =>
+            docs.push({ ...document.data(), id: document.id, ownerName: '' } as Document)
+          );
+          if (docs.length > 0) {
+            docs = await Promise.all(
+              docs.map(async (document) => {
+                if (document.ownerName === 'me') return document;
+                const docSnap = await getDoc(doc(db, 'users', document.owner));
+                const data = docSnap.data() as User;
+                return { ...document, ownerName: `${_.capitalize(data.firstname)} ${_.capitalize(data.lastname)}` };
+              })
+            );
+          }
           setDocuments(docs);
         });
       } catch (e) {
@@ -33,7 +55,10 @@ const Documents = () => {
       }
     }
 
-    return () => unsub();
+    return () => {
+      unsubOwner();
+      unsubNotOwner();
+    };
   }, [enqueueSnackbar, t]);
 
   return (
@@ -41,51 +66,17 @@ const Documents = () => {
       <div>
         <AppBar />
         <Box
-          sx={{ pt: 10, m: '0 auto', userSelect: 'none' }}
+          sx={{ pt: 10, m: '0 auto', userSelect: 'none', pb: '1.5rem' }}
           width="100%"
           maxWidth="1000px"
           role="listbox"
           component="div"
           tabIndex={0}
         >
-          {/* {documents && documents.length > 0 ? (
-            documents.map((doc) => <DocumentBar key={doc.id} document={doc} isSingle={documents.length === 1} />)
-          ) : (
-            <p>There are no documents</p>
-          )} */}
           {documents && documents.length > 0 ? (
-            <>
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-              <DocumentBar document={documents[0]} isSingle={documents.length === 1} />
-            </>
+            documents.map((document) => (
+              <DocumentBar key={document.id} document={document} isSingle={documents.length === 1} />
+            ))
           ) : (
             <p>There are no documents</p>
           )}
