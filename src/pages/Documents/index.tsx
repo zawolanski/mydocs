@@ -48,6 +48,7 @@ const Documents = () => {
               })
             );
           }
+          docs = _.orderBy(docs, (document) => document.updatedAt.toDate(), 'desc');
           setDocuments(docs);
         });
       } catch (e) {

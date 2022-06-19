@@ -2,7 +2,7 @@ import { alpha, Box, IconButton, Stack, Typography } from '@mui/material';
 import { Article, MoreVert } from '@mui/icons-material';
 
 import { Document } from '@/types/models/document';
-import { transformLastOpenedData } from '@/helpers/transformLastOpenedDate';
+import { transformUpdatedDate } from '@/helpers/transformLastOpenedDate';
 
 interface Props {
   document: Document;
@@ -53,7 +53,7 @@ const DocumentBar = ({ document, isSingle }: Props) => (
         </Box>
         <Box width="15%">
           <Typography variant="body2" sx={{ color: (theme) => theme.palette.text.secondary }}>
-            {transformLastOpenedData(document.lastOpenedByOwner)}
+            {transformUpdatedDate(document.updatedAt)}
           </Typography>
         </Box>
         <IconButton sx={{ mr: '0.25rem !important', height: '2.5rem', width: '2.5rem' }}>

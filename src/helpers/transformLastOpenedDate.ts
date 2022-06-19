@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
 
-export const transformLastOpenedData = (timestamp: Timestamp) => {
+export const transformUpdatedDate = (timestamp: Timestamp) => {
   const date = timestamp.toDate();
 
   const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
