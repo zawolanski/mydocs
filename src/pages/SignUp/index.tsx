@@ -5,8 +5,9 @@ import { Box, Button, Checkbox, Divider, FormControlLabel, TextField, Typography
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
 
-import FormTemplate from '@/templates/Form';
-import GoogleAuth from '@/components/GoogleAuth';
+import FormTemplate from '@templates/Form';
+import GoogleAuth from '@components/GoogleAuth';
+import { writeUserData } from '@/helpers/writeData/writeUserData';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -39,6 +40,8 @@ const SignUp = () => {
       const { user } = userCredentials;
 
       await updateProfile(user, { displayName: `${firstname} ${lastname}` });
+
+      await writeUserData({ id: user.uid, email, firstname, lastname });
 
       navigate('/documents');
       return;
