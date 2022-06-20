@@ -12,6 +12,7 @@ import AppBar from '@components/AppBar/';
 import DocumentBar from '@components/DocumentBar';
 import { User } from '@/types/models/user';
 import { getInvitedDocQuery, getOwnerDocQuery } from '@/firebase/queries';
+import DocumentBarsLabel from '@components/DocumentBarsLabel';
 
 const Documents = () => {
   const [documents, setDocuments] = useState<Document[] | null>(null);
@@ -74,6 +75,7 @@ const Documents = () => {
           component="div"
           tabIndex={0}
         >
+          <DocumentBarsLabel />
           {documents && documents.length > 0 ? (
             documents.map((document) => (
               <DocumentBar key={document.id} document={document} isSingle={documents.length === 1} />
