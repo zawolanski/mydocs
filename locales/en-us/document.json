@@ -1,0 +1,8 @@
+{
+  "sharedInfo": "shared",
+  "labels": {
+    "documentName": "Document name",
+    "owned": "Owned by",
+    "lastUpdate": "Last update"
+  }
+}
